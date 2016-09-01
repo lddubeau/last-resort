@@ -32,7 +32,7 @@ beforeEach(done => {
   // script load events from being generated in loadInFrame.
   document.body.appendChild(frame);
   frameWindow = frame.contentWindow;
-  const listener = (ev) => {
+  const listener = () => {
     frame.removeEventListener("load", listener);
     done();
   };
