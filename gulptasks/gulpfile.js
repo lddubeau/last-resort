@@ -79,10 +79,10 @@ gulp.task("tslint", () =>
           .pipe(tslint())
           .pipe(tslint.report()));
 
-gulp.task("test", ["lint", "semver", "test-karma", "pack"]);
+gulp.task("test", ["lint", "versync", "test-karma", "pack"]);
 
-gulp.task("semver",
-          () => execFileAsync("./node_modules/.bin/semver-sync", ["-v"]));
+gulp.task("versync",
+          () => execFileAsync("./node_modules/.bin/versync", ["-v"]));
 
 gulp.task("test-karma", (done) => {
   new Server({
