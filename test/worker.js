@@ -1,5 +1,5 @@
 self.importScripts("/base/node_modules/bluebird/js/browser/bluebird.js",
-                   "/base/src/last-resort.js");
+                   "/base/build/dist/last-resort.js");
 
 /* global LastResort */
 const oe = LastResort.install(self);

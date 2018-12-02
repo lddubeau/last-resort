@@ -16,9 +16,13 @@ export type Context = Window;
 
 export class OnError {
   private _context: Context;
-  private _registered: Handler;
+  private _registered?: Handler;
+  // We keep these fields for diagnosis.
+  // @ts-ignore
   private _triggered: boolean = false;
+  // @ts-ignore
   private _triggeredUncaughtException: boolean = false;
+  // @ts-ignore
   private _triggeredUnhandledException: boolean = false;
   private _onerror: any;
   private _onunhandledrejection: any = null;
@@ -90,7 +94,7 @@ export class OnError {
   }
 
   private _handle(evContext: any, ev: any): void {
-    const registered: Handler = this._registered;
+    const registered = this._registered;
     this._triggered = true;
     triggered = true;
 

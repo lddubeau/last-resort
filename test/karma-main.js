@@ -21,7 +21,7 @@ require.config({
   baseUrl: "/base",
   paths: {
     bluebird: "node_modules/bluebird/js/browser/bluebird",
-    "last-resort": "src/last-resort",
+    "last-resort": "build/dist/last-resort",
   },
 });
 

@@ -4,7 +4,7 @@
     "one-line": false,
     "no-reference": false,
     "interface-name": false,
-    "typedef": [true, "call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
+    "typedef": [true, "call-signature", "parameter", "arrow-parameter", "property-declaration", "member-variable-declaration"],
     "variable-name": [true, "check-format", "allow-leading-underscore",
                      "allow-trailing-underscore", "ban-keywords"]
   },

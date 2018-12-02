@@ -27,7 +27,7 @@ module.exports = function karmaConfig(config) {
     files: [
       "test/karma-main.js",
       "node_modules/babel-polyfill/dist/polyfill.js",
-      { pattern: "src/last-resort.ts", included: false },
+      { pattern: "build/dist/last-resort.js", included: false },
       { pattern: "test/frame.html", included: false },
       { pattern: "test/!(karma-main).js", included: false },
       { pattern: "node_modules/bluebird/js/browser/bluebird.js",
@@ -37,16 +37,6 @@ module.exports = function karmaConfig(config) {
     preprocessors: {
       "test/**/!(karma-main|frame_script|worker).js": ["babelModule"],
       "test/@(karma-main|frame_script|worker).js": ["babel"],
-      "src/last-resort.ts": ["typescript", "wrap"],
-    },
-    wrapPreprocessor: {
-      file: "src/wrap.js",
-      options: {
-        interpolate: /\/\*\s*<%=([\s\S]+?)%>\s*\*\//,
-      },
-    },
-    typescriptPreprocessor: {
-      tsconfigPath: "./tsconfig.json",
     },
     customPreprocessors: {
       babelModule: {
@@ -73,7 +63,7 @@ module.exports = function karmaConfig(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ["Chrome", "Firefox"],
+    browsers: ["ChromeHeadless", "FirefoxHeadless"],
     browserStack: {
       project: thisPackage.name,
     },

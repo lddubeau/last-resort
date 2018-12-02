@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
+    "strict": true,
     "module": "commonjs",
     "target": "es5",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
-    "outDir": "build",
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "build/dist",
     "declaration": true,
-    "sourceMap": true,
     "lib": ["es6", "dom"]
   },
   "files": [

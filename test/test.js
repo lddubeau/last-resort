@@ -2,7 +2,7 @@
    __karma__ mocha */
 /* eslint-disable import/no-unresolved */
 import require from "require";
-import lr from "last-resort";
+import * as lr from "last-resort";
 import Promise from "bluebird";
 
 window.Promise = Promise;
@@ -128,7 +128,7 @@ function rjsLoadLastResortInFrame() {
       baseUrl: "/base",
       paths: {
         bluebird: "node_modules/bluebird/js/browser/bluebird",
-        "last-resort": "src/last-resort",
+        "last-resort": "build/dist/last-resort",
       },
     });
     return new Promise(
