@@ -1,11 +1,12 @@
 /* global module require */
 /* eslint-env node */
+
 "use strict";
-var _ = require("lodash");
-var thisPackage = require("./package");
+
+const thisPackage = require("./package");
 
 // Minimal localConfig if there is not one locally.
-var localConfig = {
+let localConfig = {
   browserStack: {},
 };
 try {
@@ -15,7 +16,7 @@ try {
 catch (ex) {} // eslint-disable-line no-empty
 
 module.exports = function karmaConfig(config) {
-  var options = {
+  const options = {
     basePath: "",
     frameworks: ["requirejs", "mocha", "chai-as-promised", "chai", "sinon"],
     client: {
@@ -30,8 +31,10 @@ module.exports = function karmaConfig(config) {
       { pattern: "build/dist/last-resort.js", included: false },
       { pattern: "test/frame.html", included: false },
       { pattern: "test/!(karma-main).js", included: false },
-      { pattern: "node_modules/bluebird/js/browser/bluebird.js",
-      included: false },
+      {
+        pattern: "node_modules/bluebird/js/browser/bluebird.js",
+        included: false,
+      },
     ],
     exclude: [],
     preprocessors: {
@@ -200,31 +203,29 @@ module.exports = function karmaConfig(config) {
     concurrency: 2,
   };
 
-  // Bring in the options from the localConfig file.
-  _.merge(options.browserStack, localConfig.browserStack);
+  // Merge the browserStack configuration we got with the base values in our
+  // config.
+  Object.assign(options.browserStack, localConfig.browserStack);
 
-  var browsers = config.browsers;
+  const { browsers } = config;
   if (browsers.length === 1 && browsers[0] === "all") {
-    var newList = options.browsers.concat(Object.keys(options.customLaunchers));
+    const newList = options.browsers.concat(Object.keys(options.customLaunchers));
 
     // Yes, we must modify this array in place.
+    // eslint-disable-next-line prefer-spread
     browsers.splice.apply(browsers, [0, browsers.length].concat(newList));
   }
 
-  var found = _.find(browsers, function find(x) {
-    var custom = options.customLaunchers[x];
+  const found = browsers.some((x) => {
+    const custom = options.customLaunchers[x];
     return custom && custom.base === "BrowserStack";
   });
 
-  var remote = found !== undefined;
-  if (remote) {
-    _.merge(options, {
-      captureTimeout: 3e5,
-      browserNoActivityTimeout: 3e5,
-      browserDisconnectTimeout: 3e5,
-      browserDisconnectTolerance: 3,
-    });
-
+  if (found) {
+    options.captureTimeout = 3e5;
+    options.browserNoActivityTimeout = 3e5;
+    options.browserDisconnectTimeout = 3e5;
+    options.browserDisconnectTolerance = 3;
     options.client.slow = true;
   }
 

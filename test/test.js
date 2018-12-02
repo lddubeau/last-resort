@@ -9,7 +9,7 @@ window.Promise = Promise;
 
 let frame;
 let frameWindow;
-const assert = chai.assert;
+const { assert } = chai;
 
 const agent = navigator.userAgent;
 // const CHROME = agent.indexOf(" Chrome/") !== -1 &&
@@ -25,7 +25,7 @@ if (__karma__.config.slow) {
   mocha.timeout(5000);
 }
 
-beforeEach(done => {
+beforeEach((done) => {
   frame = document.createElement("iframe");
   frame.id = "test";
   // We tried to load this through a Blob. However, using the Blob prevented the
@@ -132,23 +132,23 @@ function rjsLoadLastResortInFrame() {
       },
     });
     return new Promise(
-      (resolve) => frameWindow.require(["last-resort", "bluebird"],
-                                       (lr_, bb) => {
-                                         frameWindow.Promise = bb;
-                                         resolve(lr_);
-                                       }));
+      resolve => frameWindow.require(["last-resort", "bluebird"],
+                                     (lr_, bb) => {
+                                       frameWindow.Promise = bb;
+                                       resolve(lr_);
+                                     }));
   });
 }
 
 describe("wasTriggered", () => {
-  it("returns false when there has been no error", () =>
-     loadLastResortInFrame().then(() => {
+  it("returns false when there has been no error",
+     () => loadLastResortInFrame().then(() => {
        frameWindow.LastResort.install(frameWindow);
        assert.isFalse(frameWindow.LastResort.wasTriggered());
      }));
 
-  it("returns true when there has been an error", () =>
-     loadLastResortInFrame().then(() => {
+  it("returns true when there has been an error",
+     () => loadLastResortInFrame().then(() => {
        frameWindow.LastResort.install(frameWindow);
        assert.isFalse(frameWindow.LastResort.wasTriggered());
 
@@ -156,12 +156,12 @@ describe("wasTriggered", () => {
      })
      .then(() => assert.isTrue(frameWindow.LastResort.wasTriggered())));
 
-  it("returns true if there was an unhandled rejection", () =>
-     loadLastResortInFrame().then(() => {
+  it("returns true if there was an unhandled rejection",
+     () => loadLastResortInFrame().then(() => {
        const onerror = frameWindow.LastResort.install(frameWindow);
        assert.isFalse(frameWindow.LastResort.wasTriggered());
        return new Promise((resolve) => {
-         onerror.register(ev => {
+         onerror.register((ev) => {
            ev.preventDefault();
            resolve(ev);
          });
@@ -201,10 +201,11 @@ describe("Last Resort", () => {
       },
     };
 
-    return loadLastResortInFrame().then(rjsLoadLastResortInFrame).then(amdLr => {
-      assert.isDefined(amdLr);
-      assert.equal(frameWindow.LastResort, amdLr);
-    });
+    return loadLastResortInFrame().then(rjsLoadLastResortInFrame)
+      .then((amdLr) => {
+        assert.isDefined(amdLr);
+        assert.equal(frameWindow.LastResort, amdLr);
+      });
   });
 
   it("causes the registered function to be called", () => {
@@ -237,11 +238,8 @@ describe("Last Resort", () => {
     return new Promise((resolve) => {
       onerror.register(resolve);
       fail();
-    }).then(event => {
-      const message = event.message;
-      const filename = event.filename;
-      const lineno = event.lineno;
-      const colno = event.colno;
+    }).then((event) => {
+      const { message, filename, lineno, colno } = event;
       const err = event.error;
 
       //
@@ -259,7 +257,7 @@ describe("Last Resort", () => {
                       "Uncaught Error: failing on purpose",
                       "failing on purpose"], message);
 
-      const errorThrown = frameWindow.errorThrown;
+      const { errorThrown } = frameWindow;
 
       // Some plaforms do put stack traces on their Error objects. It is not the
       // role of Last Resort to fix this. So we stop testing here.
@@ -280,9 +278,7 @@ describe("Last Resort", () => {
       let errLineno;
       let errColno; // eslint-disable-line no-unused-vars
       if (match) {
-        errFilename = match[1];
-        errLineno = match[2];
-        errColno = match[3];
+        [, errFilename, errLineno, errColno] = match;
       }
       assert.equal(filename, errFilename);
       assert.equal(lineno, errLineno, "the line numbers should match");
@@ -305,24 +301,22 @@ describe("Last Resort", () => {
     const onerror = lr.install(frameWindow);
 
     return new Promise((resolve) => {
-      onerror.register(ev => {
+      onerror.register((ev) => {
         ev.preventDefault();
         resolve(ev);
       });
       unhandledReject();
-    }).then(ev => {
+    }).then((ev) => {
       if (frameWindow.PromiseRejectionEvent) {
         assert.isTrue(ev instanceof frameWindow.PromiseRejectionEvent);
       }
 
       assert.equal(ev.type, "unhandledrejection");
 
-      let reason = ev.reason;
-      let promise = ev.promise;
+      let { reason, promise } = ev;
 
       if (!reason && !promise) {
-        reason = ev.detail.reason;
-        promise = ev.detail.promise;
+        ({ reason, promise } = ev.detail);
       }
 
       assert.equal(reason, frameWindow.unhandledRejectError);

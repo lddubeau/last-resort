@@ -3,5 +3,16 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module"
-  }
+  },
+  overrides: [
+    {
+      files: ["worker.js"],
+      env: {
+        worker: true,
+      },
+      rules: {
+        "no-restricted-globals": "off",
+      },
+    },
+  ]
 };

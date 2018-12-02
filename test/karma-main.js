@@ -25,13 +25,13 @@ require.config({
   },
 });
 
-// eslint-disable-next-line import/no-amd
+// eslint-disable-next-line import/no-amd, import/no-dynamic-require
 require(["bluebird"], (bluebird) => {
   bluebird.Promise.config({
     warnings: true,
     longStackTraces: true,
   });
 
-  // eslint-disable-next-line global-require
+  // eslint-disable-next-line global-require, import/no-dynamic-require
   require(allTestFiles, window.__karma__.start);
 });
