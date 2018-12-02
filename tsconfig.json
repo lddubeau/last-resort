@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "target": "es5",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "outDir": "build",
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "lib": ["es6", "dom"]
   },
   "files": [
-    "typings/index.d.ts",
     "src/global.d.ts",
     "src/last-resort.ts"
   ]
