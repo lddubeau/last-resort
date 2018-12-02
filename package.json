@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "versionedSources": "src/last-resort.ts",
   "main": "last-resort.js",
-  "typings": "last-resort",
+  "typings": "last-resort.d.ts",
   "keywords": [
     "onerror",
     "error",
