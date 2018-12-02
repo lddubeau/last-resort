@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+"use strict";
+
+const fs = require("fs");
+
+const template = fs.readFileSync("src/wrap.js").toString();
+
+const target = "build/dist/last-resort.js";
+const source = fs.readFileSync(target).toString();
+
+const result = template.replace(/\/\*\s*<%= contents %>\s*\*\//, source);
+
+fs.writeFileSync(target, result);
