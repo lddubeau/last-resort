@@ -1,4 +1,4 @@
-/* global chaiAsPromised require */
+/* global require */
 
 const allTestFiles = [];
 const TEST_REGEXP = /test\/(?!karma-main|worker|frame_script).*\.js$/i;
@@ -9,13 +9,6 @@ Object.keys(window.__karma__.files).forEach((file) => {
     allTestFiles.push(normalizedTestModule);
   }
 });
-
-chaiAsPromised.transferPromiseness = function transferPromiseness(assertion,
-                                                                  promise) {
-  assertion.then = promise.then.bind(promise);
-  assertion.return = promise.return.bind(promise);
-  assertion.catch = promise.catch.bind(promise);
-};
 
 require.config({
   baseUrl: "/base",

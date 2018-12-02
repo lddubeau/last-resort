@@ -18,7 +18,7 @@ catch (ex) {} // eslint-disable-line no-empty
 module.exports = function karmaConfig(config) {
   const options = {
     basePath: "",
-    frameworks: ["requirejs", "mocha", "chai-as-promised", "chai", "sinon"],
+    frameworks: ["requirejs", "mocha", "chai", "sinon"],
     client: {
       mocha: {
         asyncOnly: true,
