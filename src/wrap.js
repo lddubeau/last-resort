@@ -30,6 +30,5 @@
     factory(exports);
   }
 }(this, function factory(exports) {
-  "use strict";
 /* <%= contents %> */
 }));
