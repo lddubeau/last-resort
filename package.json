@@ -2,7 +2,7 @@
   "name": "last-resort",
   "private": true,
   "description": "A simple library to take care of global errors in browsers.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "versionedSources": "src/last-resort.ts",
   "main": "last-resort.js",
   "typings": "last-resort.d.ts",
