@@ -1,4 +1,4 @@
-/* global chai beforeEach before afterEach sinon Worker describe it URL Blob
+/* global chai beforeEach before afterEach sinon Worker describe it
    __karma__ mocha */
 /* eslint-disable import/no-unresolved */
 import require from "require";
@@ -274,14 +274,21 @@ describe("Last Resort", () => {
       if (!match) {
         throw new Error("cannot match trace");
       }
-      let errFilename;
-      let errLineno;
-      let errColno; // eslint-disable-line no-unused-vars
-      if (match) {
-        [, errFilename, errLineno, errColno] = match;
-      }
+      const [, errFilename, errLineno, errColno] = match;
       assert.equal(filename, errFilename);
-      assert.equal(lineno, errLineno, "the line numbers should match");
+
+      //
+      // We used to check that the line numbers of the event and the error
+      // object were the same but that generally cannot be guaranteed. Some
+      // browsers (e.g. Chrome) will generate the event line number from the
+      // location of the ``throw`` statement, whereas the Error object gets the
+      // line number of the line where it was created. THE TWO ARE NOT
+      // NECESSARILY EQUAL.
+      //
+      // So we check that the two are defined.
+      //
+      assert.isDefined(errLineno);
+      assert.isDefined(lineno);
 
       // If there was a colno in the trace, then we must get a colno in the
       // event.

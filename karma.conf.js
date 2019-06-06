@@ -45,13 +45,16 @@ module.exports = function karmaConfig(config) {
       babelModule: {
         base: "babel",
         options: {
-          plugins: ["transform-es2015-modules-amd"],
+          plugins: ["@babel/plugin-transform-modules-amd"],
         },
       },
     },
     babelPreprocessor: {
       options: {
-        presets: ["es2015"],
+        presets: ["@babel/preset-env"],
+        ignore: [
+          "node_modules",
+        ],
         sourceMap: "inline",
       },
       filename: function filename(file) {
