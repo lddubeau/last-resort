@@ -1,4 +1,4 @@
-/* global chai beforeEach before afterEach sinon Worker describe it
+/* global chai beforeEach before afterEach sinon describe it
    __karma__ mocha */
 /* eslint-disable import/no-unresolved */
 import require from "require";

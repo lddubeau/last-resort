@@ -1,5 +1,3 @@
-/* global require */
-
 const allTestFiles = [];
 const TEST_REGEXP = /test\/(?!karma-main|worker|frame_script).*\.js$/i;
 
